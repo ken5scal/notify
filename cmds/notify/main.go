@@ -76,6 +76,7 @@ func main() {
 				continue
 			}
 
+			// Following Code to detect already added path will not work bc foreach does not return error
 			//fn := func(i int, data []byte) bool {
 			//	err := json.Unmarshal(data, &prevPath)
 			//	if err != nil {

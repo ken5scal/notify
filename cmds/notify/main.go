@@ -76,28 +76,6 @@ func main() {
 				continue
 			}
 
-			// Following Code to detect already added path will not work bc foreach does not return error
-			//fn := func(i int, data []byte) bool {
-			//	err := json.Unmarshal(data, &prevPath)
-			//	if err != nil {
-			//		fatalErr = err
-			//		return true
-			//	}
-			//	fmt.Printf("Inspecting existing path: %s\n", prevPath.Path)
-			//	if prevPath.Path == p {
-			//		fmt.Println("Detected existing path")
-			//		fatalErr = err
-			//		return true
-			//	}
-			//
-			//	return false
-			//}
-			//
-			//if err1 := col.ForEach(fn); err1 != nil {
-			//	fatalErr = err
-			//	return
-			//}
-
 			path := &path{Path:p, Hash:"Not yet archived"}
 			if err := col.InsertJSON(path); err != nil {
 				fatalErr = err

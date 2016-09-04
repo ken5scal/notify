@@ -80,7 +80,8 @@ func main() {
 	check(m, col)
 	signalChan := make(chan os.Signal, 1)
 	signal.Notify(signalChan, syscall.SIGINT, syscall.SIGTERM)
-	Loop: for { // Loop: is a label of this for loop
+	Loop: for {
+		// Loop: is a label of this for loop
 		select {
 		case <-time.After(time.Duration(*interval) * time.Second):
 			check(m, col)
@@ -95,4 +96,15 @@ func main() {
 
 func check(m *monitor.Monitor, col *filedb.C) {
 	log.Println("Start Checking...")
+	counter, err := m.Now()
+	if err != nil {
+		log.Panicln("Failed backuping: ", err)
+	}
+
+	if counter > 0 {
+		log.Printf(" Checked %d dirs\n", counter)
+		// Updatting hash
+	} else {
+		log.Println(" No update found")
+	}
 }

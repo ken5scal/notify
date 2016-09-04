@@ -26,7 +26,7 @@ func main() {
 		dbpath = flag.String("db", "./backupdata", "bpath to db dir")
 	)
 	flag.Parse()
-	args := flag.Args()
+	args := flag.Args() // Return arguments as slice (excluding command line flag"
 	if len(args) < 1 {
 		fatalErr = errors.New("Error: Specify command")
 		return

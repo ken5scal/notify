@@ -4,6 +4,7 @@ import (
 	"flag"
 	"log"
 	"errors"
+	"github.com/matryer/filedb"
 )
 
 func main() {
@@ -23,6 +24,22 @@ func main() {
 	args := flag.Args()
 	if len(args) < 1 {
 		fatalErr = errors.New("Error: Specify command")
+		return
+	}
+
+	/*
+		Persist Data
+	 */
+	db, err := filedb.Dial(*dbpath)
+	if err != nil {
+		fatalErr = err
+		return
+	}
+	defer db.Close()
+
+	col, err := db.C("paths")
+	if err != nil {
+		fatalErr = err
 		return
 	}
 }

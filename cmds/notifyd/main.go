@@ -95,33 +95,29 @@ func main() {
 }
 
 func check(m *monitor.Monitor, col *filedb.C) {
-	log.Println("Start Checking...")
+	log.Println("Checking...")
 	counter, err := m.Now()
 	if err != nil {
-		log.Panicln("Failed backuping: ", err)
+		log.Fatalln("failed to backup:", err)
 	}
-
 	if counter > 0 {
-		log.Printf(" Checked %d dirs\n", counter)
-
-		// Update hash
+		log.Printf("  Archived %d directories\n", counter)
+		// update hashes
 		var path path
-		col.SelectEach(func(_ int, data[]byte) (bool, []byte, bool) {
+		col.SelectEach(func(_ int, data []byte) (bool, []byte, bool) {
 			if err := json.Unmarshal(data, &path); err != nil {
-				log.Println("Failed reading JSON Data. " + "Moving to next one:", err)
-				//return true, data, false
+				log.Println("failed to unmarshal data (skipping):", err)
+				return true, data, false
 			}
-
 			path.Hash, _ = m.Paths[path.Path]
 			newdata, err := json.Marshal(&path)
 			if err != nil {
-				log.Println("Failed writing JSON data. " + "Moving to next one:", err)
+				log.Println("failed to marshal data (skipping):", err)
 				return true, data, false
 			}
-
 			return true, newdata, false
 		})
 	} else {
-		log.Println(" No update found")
+		log.Println("  No changes")
 	}
 }

@@ -7,6 +7,11 @@ import (
 	"github.com/matryer/filedb"
 )
 
+type path struct {
+	Path string
+	Hash string
+}
+
 func main() {
 	var fatalErr error
 	defer func() {
@@ -37,6 +42,7 @@ func main() {
 	}
 	defer db.Close()
 
+	// Obtain column
 	col, err := db.C("paths")
 	if err != nil {
 		fatalErr = err

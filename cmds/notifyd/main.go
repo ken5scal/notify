@@ -28,6 +28,7 @@ func main() {
 	}()
 
 	var (
+		// These flag.* methods do not return actual types, but pointers
 		interval = flag.Int("interval", 10, "Check duration per sec")
 		service = flag.String("service", "slack", "Notify service")
 		dbpath = flag.String("db", "./db", "path to file db")

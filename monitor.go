@@ -4,6 +4,7 @@ import "fmt"
 
 type Monitor struct {
 	Paths map[string]string
+	Service string
 }
 
 func (m *Monitor) Now() (int, error) {

@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"flag"
+	"github.com/ken5scal/goblueprints/chapter8/backup"
 )
 
 func main() {
@@ -19,4 +20,8 @@ func main() {
 	)
 
 	flag.Parse()
+
+	m := &backup.Monitor{
+		Paths: make(map[string]string),
+	}
 }

@@ -83,7 +83,7 @@ func main() {
 		var path path
 		col.RemoveEach(func(i int, data []byte) (bool, bool) {
 			err := json.Unmarshal(data, &path)
-			if err!=nil {
+			if err != nil {
 				fatalErr = err
 				return false, true
 			}

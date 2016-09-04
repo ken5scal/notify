@@ -5,6 +5,8 @@ import (
 	"flag"
 	"github.com/ken5scal/notify"
 	"github.com/matryer/filedb"
+	"encoding/json"
+	"errors"
 )
 
 type path struct {
@@ -43,6 +45,26 @@ func main() {
 	col, err := db.C("paths")
 	if err != nil {
 		fatalErr = err
+		return
+	}
+
+	/*
+		Cash Data
+	 */
+	var path path
+	col.ForEach(func(_ int, data []byte) bool {
+		if err := json.Unmarshal(data, &path); err != nil {
+			fatalErr = err
+			return true
+		}
+
+		m.Paths[path.Path] = path.Hash
+		return false
+	})
+	if fatalErr != nil {
+		return
+	} else if len(m.Paths) < 1 {
+		fatalErr = errors.New("Nopath exists. add path")
 		return
 	}
 }

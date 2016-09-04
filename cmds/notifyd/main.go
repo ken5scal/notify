@@ -92,3 +92,7 @@ func main() {
 		}
 	}
 }
+
+func check(m *monitor.Monitor, col *filedb.C) {
+	log.Println("Start Checking...")
+}

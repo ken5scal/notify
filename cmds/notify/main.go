@@ -65,11 +65,16 @@ func main() {
 			return false
 		})
 	case "add":
+		var prevPath path
 		if len(args[1:]) == 0 {
 			fatalErr = errors.New("Specify path to add")
 			return
 		}
 		for _, p := range args[1:] {
+			if prevPath.Path == p {
+				continue
+			}
+
 			path := &path{
 				Path:p,
 				Hash:"Not yet archived"}
@@ -78,6 +83,7 @@ func main() {
 				return
 			}
 			fmt.Printf("+ %s\n", path)
+			prevPath = *path
 		}
 	case "remove":
 		var path path

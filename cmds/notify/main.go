@@ -16,6 +16,7 @@ func main() {
 	}()
 
 	var (
+		// Command line flag
 		dbpath = flag.String("db", "./backupdata", "bpath to db dir")
 	)
 	flag.Parse()

@@ -27,6 +27,7 @@ func dialDb(db *filedb.DB, dbpath string) (*filedb.DB, error) {
 			// ./notify -db=dbpath add ${Something like ls -l monitorPath | grep -v db}
 			// Then call Dial Again
 
+
 			return dialDb(db, ".")
 		} else {
 			return nil, err

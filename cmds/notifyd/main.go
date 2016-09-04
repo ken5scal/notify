@@ -109,14 +109,16 @@ func check(m *monitor.Monitor, col *filedb.C) {
 		col.SelectEach(func(_ int, data[]byte) (bool, []byte, bool) {
 			if err := json.Unmarshal(data, &path); err != nil {
 				log.Println("Failed reading JSON Data. " + "Moving to next one:", err)
-				return true, data, false
+				//return true, data, false
 			}
+
 			path.Hash, _ = m.Paths[path.Path]
 			newdata, err := json.Marshal(&path)
 			if err != nil {
 				log.Println("Failed writing JSON data. " + "Moving to next one:", err)
 				return true, data, false
 			}
+
 			return true, newdata, false
 		})
 	} else {

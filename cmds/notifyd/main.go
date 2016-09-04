@@ -80,8 +80,7 @@ func main() {
 	check(m, col)
 	signalChan := make(chan os.Signal, 1)
 	signal.Notify(signalChan, syscall.SIGINT, syscall.SIGTERM)
-	Loop:
-	for {
+	Loop: for { // Loop: is a label of this for loop
 		select {
 		case <-time.After(time.Duration(*interval) * time.Second):
 			check(m, col)

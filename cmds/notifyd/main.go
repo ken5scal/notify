@@ -19,6 +19,22 @@ type path struct {
 	Hash string
 }
 
+func hogehoge(db filedb.DB, dbpath string) (*filedb.DB, error) {
+	db, err := filedb.Dial(dbpath)
+	if err != nil {
+		if err == filedb.ErrDBNotFound {
+			// TODO should do following
+			// ./notify -db=dbpath add ${Something like ls -l monitorPath | grep -v db}
+			// Then call Dial Again
+			//return hogehoge(db, dbpath)
+			return nil, err // for now
+		} else {
+			return nil, err
+		}
+	}
+	return db, nil
+}
+
 func main() {
 	var fatalErr error
 	defer func() {
@@ -32,6 +48,7 @@ func main() {
 		interval = flag.Int("interval", 10, "Check duration per sec")
 		service = flag.String("service", "slack", "Notify service")
 		dbpath = flag.String("db", "./db", "path to file db")
+		//monitorPath = flag.String("monitor", ".", "monitoring path")
 	)
 
 	flag.Parse()
@@ -41,11 +58,18 @@ func main() {
 		Service: *service,
 	}
 
-	db, err := filedb.Dial(*dbpath)
-	if err != nil {
-		fatalErr = err
-		return
-	}
+	//db, err := filedb.Dial(*dbpath)
+	//if err != nil {
+	//	if err == filedb.ErrDBNotFound {
+	//		// TODO should do following
+	//		// ./notify -db=dbpath add ${Something like ls -l monitorPath | grep -v db}
+	//		// Then call Dial Again
+	//	} else {
+	//		fatalErr = err
+	//		return
+	//	}
+	//}
+	db, _ := hogehoge(nil, *dbpath)
 	defer db.Close()
 
 	col, err := db.C("paths")

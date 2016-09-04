@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 	"flag"
-	"github.com/ken5scal/goblueprints/chapter8/backup"
+	"github.com/ken5scal/notify"
 )
 
 func main() {
@@ -16,12 +16,13 @@ func main() {
 
 	var (
 		interval = flag.Int("interval", 10, "Check duration per sec")
-		// service = flag.String("service", "slack", "Notify service")
+		service = flag.String("service", "slack", "Notify service")
 	)
 
 	flag.Parse()
 
-	m := &backup.Monitor{
+	m := &monitor.Monitor{
 		Paths: make(map[string]string),
+		Service: *service,
 	}
 }

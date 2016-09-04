@@ -84,6 +84,7 @@ func main() {
 				}
 				fmt.Printf("Inspecting existing path: %s\n", prevPath.Path)
 				if prevPath.Path == p {
+					fmt.Println("Detected existing path")
 					return true
 				}
 

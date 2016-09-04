@@ -7,6 +7,11 @@ import (
 	"github.com/matryer/filedb"
 	"encoding/json"
 	"errors"
+	"os"
+	"os/signal"
+	"syscall"
+	"time"
+	"fmt"
 )
 
 type path struct {
@@ -66,5 +71,24 @@ func main() {
 	} else if len(m.Paths) < 1 {
 		fatalErr = errors.New("Nopath exists. add path")
 		return
+	}
+
+	/*
+		Infinite Loop
+	 */
+	check(m, col)
+	signalChan := make(chan os.Signal, 1)
+	signal.Notify(signalChan, syscall.SIGINT, syscall.SIGTERM)
+	Loop:
+	for {
+		select {
+		case <-time.After(time.Duration(*interval) * time.Second):
+			check(m, col)
+		case <-signalChan:
+		// Finishing Loop
+			fmt.Println()
+			log.Printf("Ending...")
+			break Loop
+		}
 	}
 }

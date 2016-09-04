@@ -41,7 +41,11 @@ func main() {
 	db, err := filedb.Dial(*dbpath)
 	if err != nil {
 		fatalErr = err
-		return
+		if err == filedb.ErrDBNotFound {
+			return
+		} else {
+			return
+		}
 	}
 	defer db.Close()
 

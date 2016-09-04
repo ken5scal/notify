@@ -19,15 +19,15 @@ type path struct {
 	Hash string
 }
 
-func hogehoge(db filedb.DB, dbpath string) (*filedb.DB, error) {
+func dialDb(db *filedb.DB, dbpath string) (*filedb.DB, error) {
 	db, err := filedb.Dial(dbpath)
 	if err != nil {
 		if err == filedb.ErrDBNotFound {
 			// TODO should do following
 			// ./notify -db=dbpath add ${Something like ls -l monitorPath | grep -v db}
 			// Then call Dial Again
-			//return hogehoge(db, dbpath)
-			return nil, err // for now
+
+			return dialDb(db, ".")
 		} else {
 			return nil, err
 		}
@@ -58,18 +58,7 @@ func main() {
 		Service: *service,
 	}
 
-	//db, err := filedb.Dial(*dbpath)
-	//if err != nil {
-	//	if err == filedb.ErrDBNotFound {
-	//		// TODO should do following
-	//		// ./notify -db=dbpath add ${Something like ls -l monitorPath | grep -v db}
-	//		// Then call Dial Again
-	//	} else {
-	//		fatalErr = err
-	//		return
-	//	}
-	//}
-	db, _ := hogehoge(nil, *dbpath)
+	db, _ := dialDb(nil, *dbpath)
 	defer db.Close()
 
 	col, err := db.C("paths")

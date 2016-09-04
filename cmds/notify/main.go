@@ -75,9 +75,7 @@ func main() {
 				continue
 			}
 
-			path := &path{
-				Path:p,
-				Hash:"Not yet archived"}
+			path := &path{Path:p, Hash:"Not yet archived"}
 			if err := col.InsertJSON(path); err != nil {
 				fatalErr = err
 				return

@@ -23,12 +23,10 @@ func dialDb(db *filedb.DB, dbpath string) (*filedb.DB, error) {
 	db, err := filedb.Dial(dbpath)
 	if err != nil {
 		if err == filedb.ErrDBNotFound {
-			// TODO should do following
-			// ./notify -db=dbpath add ${Something like ls -l monitorPath | grep -v db}
-			// Then call Dial Again
-
-
-			return dialDb(db, ".")
+			if err := os.MkdirAll(dbpath, 0755); err != nil {
+				return nil, err
+			}
+			return dialDb(db, dbpath)
 		} else {
 			return nil, err
 		}

@@ -1,5 +1,7 @@
 package monitor
 
+import "fmt"
+
 type Monitor struct {
 	Paths map[string]string
 }
@@ -28,5 +30,6 @@ func (m *Monitor) act(path string) error {
 	//dirname := filepath.Base(path)
 	//filename := fmt.Sprintf("%d.zip", time.Now().UnixNano())
 	//return m.Archiver.Archive(path, filepath.Join(m.Destination, dirname, filename))
+	fmt.Println("Act has bee invoked...")
 	return error("hogehoge")
 }

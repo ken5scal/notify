@@ -71,7 +71,25 @@ func main() {
 			return
 		}
 		for _, p := range args[1:] {
+			fmt.Printf("Argument: %s\n", p)
 			if prevPath.Path == p {
+				continue
+			}
+
+			if err1 := col.ForEach(func(i int, data []byte) bool {
+				err := json.Unmarshal(data, &prevPath)
+				if err != nil {
+					fatalErr = err
+					return true
+				}
+				fmt.Printf("Inspecting existing path: %s\n", prevPath.Path)
+				if prevPath.Path == p {
+					return true
+				}
+
+				return false
+			}); err1 != nil {
+				fmt.Println("Detected existing path")
 				continue
 			}
 

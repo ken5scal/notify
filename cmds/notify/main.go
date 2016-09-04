@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"log"
+	"errors"
 )
 
 func main() {
@@ -13,4 +14,14 @@ func main() {
 			log.Fatalln(fatalErr)
 		}
 	}()
+
+	var (
+		dbpath = flag.String("db", "./backupdata", "bpath to db dir")
+	)
+	flag.Parse()
+	args := flag.Args()
+	if len(args) < 1 {
+		fatalErr = errors.New("Error: Specify command")
+		return
+	}
 }

@@ -82,7 +82,7 @@ func main() {
 	if fatalErr != nil {
 		return
 	} else if len(m.Paths) < 1 {
-		fatalErr = errors.New("Nopath exists. add path")
+		fatalErr = errors.New("No path exists. add path")
 		return
 	}
 

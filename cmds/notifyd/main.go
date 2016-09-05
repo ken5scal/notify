@@ -12,6 +12,7 @@ import (
 	"syscall"
 	"time"
 	"fmt"
+	"strings"
 )
 
 type path struct {
@@ -21,18 +22,27 @@ type path struct {
 
 func dialDb(db *filedb.DB, dbpath string) (*filedb.DB, error) {
 	db, err := filedb.Dial(dbpath)
-	if err != nil {
-		if err == filedb.ErrDBNotFound {
-			if err := os.MkdirAll(dbpath, 0755); err != nil {
-				return nil, err
-			}
-			return dialDb(db, dbpath)
-		} else {
-			return nil, err
-		}
+
+	if err == nil {
+		return db, nil
 	}
-	return db, nil
+
+	if err != filedb.ErrDBNotFound {
+		return nil, err
+	}
+
+	if strings.Compare(dbpath, defaultPath) != 0 {
+		return nil, err
+	}
+
+	if err := os.MkdirAll(dbpath, 0755); err != nil {
+		return nil, err
+	}
+
+	return dialDb(db, dbpath)
 }
+
+var defaultPath = "./db"
 
 func main() {
 	var fatalErr error
@@ -46,7 +56,7 @@ func main() {
 		// These flag.* methods do not return actual types, but pointers
 		interval = flag.Int("interval", 10, "Check duration per sec")
 		service = flag.String("service", "slack", "Notify service")
-		dbpath = flag.String("db", "./db", "path to file db")
+		dbpath = flag.String("db", defaultPath, "path to file db")
 		//monitorPath = flag.String("monitor", ".", "monitoring path")
 	)
 

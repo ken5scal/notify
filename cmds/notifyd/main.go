@@ -69,8 +69,8 @@ func main() {
 
 	db, _ := dialDb(nil, *dbpath)
 	defer db.Close()
-	fmt.Println(args)
-	monitor.AddPath(dbpath, args)
+	fmt.Printf("Argument: %s\n", args[0])
+	monitor.AddPath(*dbpath, args)
 
 	col, err := db.C("paths")
 	if err != nil {

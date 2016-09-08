@@ -57,6 +57,7 @@ func main() {
 		interval = flag.Int("interval", 10, "Check duration per sec")
 		service = flag.String("service", "slack", "Notify service")
 		dbpath = flag.String("db", defaultPath, "path to file db")
+		monitorPath = flag.String("monitor", "", "path to monitor")
 	)
 
 	flag.Parse()
@@ -70,6 +71,9 @@ func main() {
 	defer db.Close()
 	//fmt.Printf("Argument: %s\n", args[0])
 	//monitor.AddPath(*dbpath, args)
+	if len(*monitorPath) > 0 {
+		monitor.AddPath(*dbpath, *monitorPath)
+	}
 
 	col, err := db.C("paths")
 	if err != nil {

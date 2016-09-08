@@ -13,7 +13,6 @@ import (
 	"time"
 	"fmt"
 	"strings"
-	"sort"
 )
 
 type path struct {
@@ -44,6 +43,8 @@ func dialDb(db *filedb.DB, dbpath string) (*filedb.DB, error) {
 }
 
 var defaultPath = "./db"
+
+type stringslice []string
 
 func main() {
 	var fatalErr error

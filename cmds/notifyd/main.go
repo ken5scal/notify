@@ -45,6 +45,9 @@ func dialDb(db *filedb.DB, dbpath string) (*filedb.DB, error) {
 var defaultPath = "./db"
 
 type stringslice []string
+func (s *stringslice) String() string {
+	return fmt.Printf("%s", *s)
+}
 
 func main() {
 	var fatalErr error

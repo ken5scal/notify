@@ -13,6 +13,7 @@ import (
 	"time"
 	"fmt"
 	"strings"
+	"sort"
 )
 
 type path struct {
@@ -57,7 +58,7 @@ func main() {
 		interval = flag.Int("interval", 10, "Check duration per sec")
 		service = flag.String("service", "slack", "Notify service")
 		dbpath = flag.String("db", defaultPath, "path to file db")
-		monitorPath = flag.String("monitor", "", "path to monitor")
+		monitorPaths stringslice
 	)
 
 	flag.Parse()

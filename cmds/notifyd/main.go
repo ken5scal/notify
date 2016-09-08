@@ -71,8 +71,8 @@ func main() {
 		monitorpath stringslice
 	)
 
+	flag.Var(&monitorpath, "hoge", "List of monitor path")
 	flag.Parse()
-	flag.Var(&monitorpath, "", "List of monitor path")
 
 	m := &monitor.Monitor{
 		Paths: make(map[string]string),
@@ -86,6 +86,10 @@ func main() {
 	//if len(*monitorPath) > 0 {
 	//	monitor.AddPath(*dbpath, *monitorPath)
 	//}
+	fmt.Printf("%d\n", len(monitorpath))
+	for i := 0; i < len(monitorpath); i++ {
+		fmt.Printf("%d\n", monitorpath[i])
+	}
 
 	col, err := db.C("paths")
 	if err != nil {

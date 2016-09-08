@@ -50,7 +50,7 @@ func (s *stringslice) String() string {
 }
 func (s *stringslice) Set(value string) error {
 	fmt.Printf("%s\n", value)
-	*s = append(*s, -1)
+	*s = append(*s, value)
 	return nil
 }
 

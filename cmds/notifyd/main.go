@@ -60,7 +60,6 @@ func main() {
 	)
 
 	flag.Parse()
-	args := flag.Args()
 
 	m := &monitor.Monitor{
 		Paths: make(map[string]string),
@@ -69,8 +68,8 @@ func main() {
 
 	db, _ := dialDb(nil, *dbpath)
 	defer db.Close()
-	fmt.Printf("Argument: %s\n", args[0])
-	monitor.AddPath(*dbpath, args)
+	//fmt.Printf("Argument: %s\n", args[0])
+	//monitor.AddPath(*dbpath, args)
 
 	col, err := db.C("paths")
 	if err != nil {

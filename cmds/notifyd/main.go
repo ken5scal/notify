@@ -48,6 +48,11 @@ type stringslice []string
 func (s *stringslice) String() string {
 	return fmt.Printf("%s", *s)
 }
+func (s *stringslice) Set(value string) error {
+	fmt.Printf("%s\n", value)
+	*s = append(*s, -1)
+	return nil
+}
 
 func main() {
 	var fatalErr error
@@ -62,10 +67,11 @@ func main() {
 		interval = flag.Int("interval", 10, "Check duration per sec")
 		service = flag.String("service", "slack", "Notify service")
 		dbpath = flag.String("db", defaultPath, "path to file db")
-		monitorPaths stringslice
+		monitorpath stringslice
 	)
 
 	flag.Parse()
+	flag.Var(&monitorpath, "", "List of monitor path")
 
 	m := &monitor.Monitor{
 		Paths: make(map[string]string),
@@ -76,9 +82,9 @@ func main() {
 	defer db.Close()
 	//fmt.Printf("Argument: %s\n", args[0])
 	//monitor.AddPath(*dbpath, args)
-	if len(*monitorPath) > 0 {
-		monitor.AddPath(*dbpath, *monitorPath)
-	}
+	//if len(*monitorPath) > 0 {
+	//	monitor.AddPath(*dbpath, *monitorPath)
+	//}
 
 	col, err := db.C("paths")
 	if err != nil {

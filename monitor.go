@@ -13,7 +13,7 @@ func (m *Monitor) Now() (int, error) {
 			return 0, err
 		}
 		if newHash != lastHash {
-			err := m.act(path)
+			err := m.act(path, m.Service)
 			if err != nil {
 				return counter, err
 			}
@@ -24,7 +24,7 @@ func (m *Monitor) Now() (int, error) {
 	return counter, nil
 }
 
-func (m *Monitor) act(path string) error {
+func (m *Monitor) act(path string, service string) error {
 	// TODO Notify to slack
 	//dirname := filepath.Base(path)
 	//filename := fmt.Sprintf("%d.zip", time.Now().UnixNano())

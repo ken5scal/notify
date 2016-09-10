@@ -31,3 +31,7 @@ func (m *Monitor) act(path string) error {
 	//return m.Archiver.Archive(path, filepath.Join(m.Destination, dirname, filename))
 	return nil
 }
+
+func notify(service string) error {
+	return nil
+}

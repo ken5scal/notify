@@ -32,6 +32,11 @@ func (m *Monitor) act(path string) error {
 	return nil
 }
 
-func notify(service string) error {
+func alert(service string) error {
+	switch service {
+	case "slack":
+	case "chatwork":
+	case "email":
+	}
 	return nil
 }

@@ -31,11 +31,6 @@ func dialDb(db *filedb.DB, dbpath string) (*filedb.DB, error) {
 		return nil, err
 	}
 
-	//if strings.Compare(dbpath, defaultPath) != 0 {
-	//	fmt.Println("Not Defaultpath")
-	//	return nil, err
-	//}
-
 	if err := os.MkdirAll(dbpath, 0755); err != nil {
 		return nil, err
 	}

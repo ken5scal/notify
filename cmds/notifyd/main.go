@@ -12,7 +12,6 @@ import (
 	"syscall"
 	"time"
 	"fmt"
-	"strings"
 )
 
 type path struct {
@@ -28,17 +27,22 @@ func dialDb(db *filedb.DB, dbpath string) (*filedb.DB, error) {
 	}
 
 	if err != filedb.ErrDBNotFound {
+		fmt.Println("Not ErrDBNotFound")
 		return nil, err
 	}
 
-	if strings.Compare(dbpath, defaultPath) != 0 {
-		return nil, err
-	}
+	//if strings.Compare(dbpath, defaultPath) != 0 {
+	//	fmt.Println("Not Defaultpath")
+	//	return nil, err
+	//}
 
 	if err := os.MkdirAll(dbpath, 0755); err != nil {
 		return nil, err
 	}
 
+	fmt.Printf("Created %s dir with paths.filedb\n", dbpath)
+	fmt.Println("Better add monitoring path to db. using notify")
+	fmt.Printf("./notify -db=../%s add ../monitoring_path\n", dbpath)
 	return dialDb(db, dbpath)
 }
 
@@ -76,7 +80,11 @@ func main() {
 		Service: *service,
 	}
 
-	db, _ := dialDb(nil, *dbpath)
+	db, err := dialDb(nil, *dbpath)
+	if err != nil {
+		fatalErr = err
+		return
+	}
 	defer db.Close()
 
 	col, err := db.C("paths")

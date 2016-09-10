@@ -67,10 +67,8 @@ func main() {
 		interval = flag.Int("interval", 10, "Check duration per sec")
 		service = flag.String("service", "slack", "Notify service")
 		dbpath = flag.String("db", defaultPath, "path to file db")
-		monitorpath stringslice
 	)
 
-	flag.Var(&monitorpath, "monitor", "List of monitor path")
 	flag.Parse()
 
 	m := &monitor.Monitor{
@@ -80,10 +78,6 @@ func main() {
 
 	db, _ := dialDb(nil, *dbpath)
 	defer db.Close()
-
-	for i := 0; i < len(monitorpath); i++ {
-		monitor.AddPath(*dbpath, monitorpath[i])
-	}
 
 	col, err := db.C("paths")
 	if err != nil {

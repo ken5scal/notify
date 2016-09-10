@@ -71,7 +71,7 @@ func main() {
 		monitorpath stringslice
 	)
 
-	flag.Var(&monitorpath, "hoge", "List of monitor path")
+	flag.Var(&monitorpath, "monitor", "List of monitor path")
 	flag.Parse()
 
 	m := &monitor.Monitor{

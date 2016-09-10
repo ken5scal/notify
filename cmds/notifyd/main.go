@@ -43,16 +43,6 @@ func dialDb(db *filedb.DB, dbpath string) (*filedb.DB, error) {
 
 var defaultPath = "./db"
 
-type stringslice []string
-
-func (s *stringslice) String() string {
-	return fmt.Sprintf("%s", *s)
-}
-func (s *stringslice) Set(value string) error {
-	*s = append(*s, value)
-	return nil
-}
-
 func main() {
 	var fatalErr error
 	defer func() {

@@ -37,6 +37,9 @@ func alert(service string) error {
 	case "slack":
 	case "chatwork":
 	case "email":
+	case "empty":
+	default:
+		// send nothing
 	}
 	return nil
 }

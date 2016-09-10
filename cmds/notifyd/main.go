@@ -88,7 +88,7 @@ func main() {
 	//}
 	fmt.Printf("%d\n", len(monitorpath))
 	for i := 0; i < len(monitorpath); i++ {
-		fmt.Printf("%d\n", monitorpath[i])
+		fmt.Printf("%s\n", monitorpath[i])
 	}
 
 	col, err := db.C("paths")

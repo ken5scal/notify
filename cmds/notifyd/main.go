@@ -50,7 +50,6 @@ func (s *stringslice) String() string {
 	return fmt.Sprintf("%s", *s)
 }
 func (s *stringslice) Set(value string) error {
-	fmt.Printf("%s\n", value)
 	*s = append(*s, value)
 	return nil
 }
@@ -88,7 +87,6 @@ func main() {
 	//}
 	fmt.Printf("%d\n", len(monitorpath))
 	for i := 0; i < len(monitorpath); i++ {
-		fmt.Printf("%s\n", monitorpath[i])
 	}
 
 	col, err := db.C("paths")

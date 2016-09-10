@@ -80,13 +80,9 @@ func main() {
 
 	db, _ := dialDb(nil, *dbpath)
 	defer db.Close()
-	//fmt.Printf("Argument: %s\n", args[0])
-	//monitor.AddPath(*dbpath, args)
-	//if len(*monitorPath) > 0 {
-	//	monitor.AddPath(*dbpath, *monitorPath)
-	//}
-	fmt.Printf("%d\n", len(monitorpath))
+
 	for i := 0; i < len(monitorpath); i++ {
+		monitor.AddPath(*dbpath, monitorpath[i])
 	}
 
 	col, err := db.C("paths")

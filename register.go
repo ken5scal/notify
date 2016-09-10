@@ -1,7 +1,7 @@
 package monitor
 
 import (
-	"errors"
+	//"errors"
 	"fmt"
 	"github.com/matryer/filedb"
 )
@@ -11,7 +11,7 @@ type path struct {
 	Hash string
 }
 
-func AddPath(dbPath string, monitorPaths []string) error {
+func AddPath(dbPath string, monitorPaths string) error {
 	db, err := filedb.Dial(dbPath)
 	if err != nil {
 		return err
@@ -24,23 +24,21 @@ func AddPath(dbPath string, monitorPaths []string) error {
 		return err
 	}
 
-	var prevPath path
-	if len(monitorPaths) == 0 {
-		return errors.New("Specify path to add")
-	}
-	for _, p := range monitorPaths {
-		fmt.Printf("Argument: %s\n", p)
-		if prevPath.Path == p {
-			continue
-		}
+	//var prevPath path
 
-		path := &path{Path:p, Hash:"Not yet archived"}
+	//for _, p := range monitorPaths {
+		fmt.Printf("Argument: %s\n", monitorPaths)
+		//if prevPath.Path == p {
+		//	continue
+		//}
+
+		path := &path{Path:monitorPaths, Hash:"Not yet archived"}
 		if err := col.InsertJSON(path); err != nil {
 			return err
 		}
 		fmt.Printf("+ %s\n", path)
-		prevPath = *path
-	}
+		//prevPath = *path
+	//}
 
 	return nil
 }

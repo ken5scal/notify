@@ -29,10 +29,11 @@ func (m *Monitor) act(path string, service string) error {
 	//dirname := filepath.Base(path)
 	//filename := fmt.Sprintf("%d.zip", time.Now().UnixNano())
 	//return m.Archiver.Archive(path, filepath.Join(m.Destination, dirname, filename))
+	alert(path, service)
 	return nil
 }
 
-func alert(service string) error {
+func alert(path string, service string) error {
 	switch service {
 	case "slack":
 	case "chatwork":

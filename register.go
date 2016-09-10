@@ -24,21 +24,13 @@ func AddPath(dbPath string, monitorPaths string) error {
 		return err
 	}
 
-	//var prevPath path
+	fmt.Printf("Argument: %s\n", monitorPaths)
 
-	//for _, p := range monitorPaths {
-		fmt.Printf("Argument: %s\n", monitorPaths)
-		//if prevPath.Path == p {
-		//	continue
-		//}
-
-		path := &path{Path:monitorPaths, Hash:"Not yet archived"}
-		if err := col.InsertJSON(path); err != nil {
-			return err
-		}
-		fmt.Printf("+ %s\n", path)
-		//prevPath = *path
-	//}
+	path := &path{Path:monitorPaths, Hash:"Not yet archived"}
+	if err := col.InsertJSON(path); err != nil {
+		return err
+	}
+	fmt.Printf("+ %s\n", path)
 
 	return nil
 }

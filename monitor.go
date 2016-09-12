@@ -1,6 +1,10 @@
 package monitor
 
-import "net/http"
+import (
+	"net/http"
+	"strings"
+	"log"
+)
 
 type Monitor struct {
 	Paths   map[string]string
@@ -31,19 +35,42 @@ func (m *Monitor) act(path string, service string) error {
 	//dirname := filepath.Base(path)
 	//filename := fmt.Sprintf("%d.zip", time.Now().UnixNano())
 	//return m.Archiver.Archive(path, filepath.Join(m.Destination, dirname, filename))
-	alert(path, service)
+	log.Println("call alert")
+	alert(path, "slack")
 	return nil
 }
 
 func alert(path string, service string) error {
+	log.Println("Alert initiated")
 	switch service {
 	case "slack":
-		resp, err := http.Get("https://hooks.slack.com/services/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")
+		//u, err := url.Parse("https://hooks.slack.com/services/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")
+		//if err != nil {
+		//	log.Println("Failed in parsing URL", err)
+		//	return
+		//}
+		//
+		//query := url.Values{""}
+		//query := url.{"text": "hogehoghoegegeg."}
+		log.Println("Slack")
+		resp, err := http.Post("https://hooks.slack.com/services/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",
+			"application/json", strings.NewReader("text: hogehoge"))
+		if err != nil {
+			log.Println(err.Error())
+		}
+		defer resp.Body.Close()
+
 	case "chatwork":
 	case "email":
 	case "empty":
 	default:
+		log.Println("default")
 		// send nothing
+		//query := url.Values{"text": "hogehoghoegegeg."}
+		//http.Post("https://hooks.slack.com/services/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",
+		//	"application/json", strings.NewReader(query.Encode()))
+		http.Post("https://hooks.slack.com/services/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",
+			"application/json", strings.NewReader("text: hogehoge"))
 	}
 	return nil
 }

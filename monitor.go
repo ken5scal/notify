@@ -4,7 +4,6 @@ import (
 	"net/http"
 	"strings"
 	"log"
-	"fmt"
 	"bufio"
 )
 
@@ -98,7 +97,7 @@ func alert(path string, service string) error {
 		defer resp.Body.Close()
 
 		if resp.StatusCode != http.StatusOK {
-			s:= bufio.NewScanner(resp.Body)
+			s := bufio.NewScanner(resp.Body)
 			s.Scan()
 			log.Println(s.Text())
 			log.Println("StatusCode =", resp.StatusCode)

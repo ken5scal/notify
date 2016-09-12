@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"strings"
 	"log"
+	"fmt"
 )
 
 type Monitor struct {
@@ -52,13 +53,52 @@ func alert(path string, service string) error {
 		//
 		//query := url.Values{""}
 		//query := url.{"text": "hogehoghoegegeg."}
-		log.Println("Slack")
-		resp, err := http.Post("https://hooks.slack.com/services/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",
-			"application/json", strings.NewReader("text: hogehoge"))
+		//log.Println("Slack")
+		//resp, err := http.Post("https://hooks.slack.com/services/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",
+		//	"application/json", strings.NewReader("text: hogehoge"))
+		//if err != nil {
+		//	log.Println(err.Error())
+		//}
+		//defer resp.Body.Close()
+		//cli
+		//
+		//u, err := url.Parse("https://hooks.slack.com/services/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")
+		//if err != nil {
+		//	log.Println("Failed parsing",err)
+		//	return err
+		//}
+		//
+		////query := url.Values{"text": }
+		//req, err := http.NewRequest("POST", u.String(), strings.NewReader("text: hogehoge"))
+		//if err != nil {
+		//	log.Println("Failed parsing",err)
+		//	return err
+		//}
+		//
+		////req.Body.Read(strings.NewReader("text: hogehoge"))
+		//req.Header.Set("Content-Type", "application/json")
+		////http.Client.Do(req)
+
+		//{"text": "This is a line of text in a channel.\nAnd this is another line of text."}
+		client := &http.Client{}
+		req, err := http.NewRequest("POST",
+			"https://hooks.slack.com/services/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",
+			strings.NewReader("text: hogehoge"))
 		if err != nil {
-			log.Println(err.Error())
+			log.Println("Failed parsing", err)
+			return err
+		}
+		req.Header.Set("Content-Type", "application/json")
+		resp, err := client.Do(req)
+		if err != nil {
+			log.Println("request failed", err)
+			return err
 		}
 		defer resp.Body.Close()
+
+		if resp.StatusCode != http.StatusOK {
+
+		}
 
 	case "chatwork":
 	case "email":

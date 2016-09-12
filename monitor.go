@@ -5,6 +5,8 @@ import (
 	"strings"
 	"log"
 	"bufio"
+	"net/http/httputil"
+	"fmt"
 )
 
 type Monitor struct {
@@ -90,9 +92,12 @@ func alert(path string, service string) error {
 		}
 		req.Header.Set("Content-Type", "application/json")
 
-		r := bufio.NewScanner(req.Body)
-		r.Scan()
-		log.Println(r.Text())
+		dump, err := httputil.DumpRequest(req, true)
+		if err != nil {
+			log.Println("Something happened", err)
+			return err
+		}
+		fmt.Printf("%q", dump)
 
 		resp, err := client.Do(req)
 		if err != nil {

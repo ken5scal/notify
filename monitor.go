@@ -38,7 +38,7 @@ func (m *Monitor) act(path string, service string) error {
 func alert(path string, service string) error {
 	switch service {
 	case "slack":
-		resp, err := http.Get("https://slack.com/")
+		resp, err := http.Get("https://hooks.slack.com/services/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")
 	case "chatwork":
 	case "email":
 	case "empty":

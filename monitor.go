@@ -7,6 +7,7 @@ import (
 	"bufio"
 	"net/http/httputil"
 	"fmt"
+	"bytes"
 )
 
 type Monitor struct {
@@ -83,9 +84,10 @@ func alert(path string, service string) error {
 
 		//{"text": "This is a line of text in a channel.\nAnd this is another line of text."}
 		client := &http.Client{}
+		jsonStr := []byte(`{"text": "hogehoge"}`)
 		req, err := http.NewRequest("POST",
 			"https://hooks.slack.com/services/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",
-			strings.NewReader("text: hogehoge"))
+			bytes.NewBuffer(jsonStr))
 		if err != nil {
 			log.Println("Failed parsing", err)
 			return err
@@ -97,7 +99,7 @@ func alert(path string, service string) error {
 			log.Println("Something happened", err)
 			return err
 		}
-		fmt.Printf("%q", dump)
+		fmt.Printf("%q\n", dump)
 
 		resp, err := client.Do(req)
 		if err != nil {

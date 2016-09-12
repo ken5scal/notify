@@ -89,6 +89,11 @@ func alert(path string, service string) error {
 			return err
 		}
 		req.Header.Set("Content-Type", "application/json")
+
+		r := bufio.NewScanner(req.Body)
+		r.Scan()
+		log.Println(r.Text())
+
 		resp, err := client.Do(req)
 		if err != nil {
 			log.Println("request failed", err)

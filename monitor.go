@@ -7,6 +7,7 @@ import (
 	"bufio"
 	"net/http/httputil"
 	"fmt"
+	"encoding/json"
 	"bytes"
 )
 
@@ -49,10 +50,18 @@ func alert(path string, service string) error {
 	switch service {
 	case "slack":
 		client := &http.Client{}
-		jsonStr := []byte(`{"text": "hogehoge"}`)
+		//byteJson := []byte(`{"text": "hogehoge"}`)
+
+		stringJson := `{"text": "hogehoge"}`
+
+		//bytes.NewBuffer(byteJson))
+		b := new(bytes.Buffer)
+		json.NewEncoder(b).Encode(stringJson)
 		req, err := http.NewRequest("POST",
 			"https://hooks.slack.com/services/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",
-			bytes.NewBuffer(jsonStr))
+			b)
+		//strings.NewReader(b))
+		//bytes.NewBuffer(byteJson))
 		if err != nil {
 			log.Println("Failed parsing", err)
 			return err

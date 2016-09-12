@@ -1,5 +1,7 @@
 package monitor
 
+import "net/http"
+
 type Monitor struct {
 	Paths   map[string]string
 	Service string
@@ -36,6 +38,7 @@ func (m *Monitor) act(path string, service string) error {
 func alert(path string, service string) error {
 	switch service {
 	case "slack":
+		resp, err := http.Get("https://slack.com/")
 	case "chatwork":
 	case "email":
 	case "empty":

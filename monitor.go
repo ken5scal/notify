@@ -5,6 +5,7 @@ import (
 	"strings"
 	"log"
 	"fmt"
+	"bufio"
 )
 
 type Monitor struct {
@@ -97,7 +98,10 @@ func alert(path string, service string) error {
 		defer resp.Body.Close()
 
 		if resp.StatusCode != http.StatusOK {
-
+			s:= bufio.NewScanner(resp.Body)
+			s.Scan()
+			log.Println(s.Text())
+			log.Println("StatusCode =", resp.StatusCode)
 		}
 
 	case "chatwork":

@@ -7,8 +7,6 @@ import (
 	"bufio"
 	"net/http/httputil"
 	"fmt"
-	"encoding/json"
-	"bytes"
 )
 
 type Monitor struct {
@@ -50,18 +48,11 @@ func alert(path string, service string) error {
 	switch service {
 	case "slack":
 		client := &http.Client{}
-		//byteJson := []byte(`{"text": "hogehoge"}`)
-
 		stringJson := `{"text": "hogehoge"}`
 
-		//bytes.NewBuffer(byteJson))
-		b := new(bytes.Buffer)
-		json.NewEncoder(b).Encode(stringJson)
 		req, err := http.NewRequest("POST",
 			"https://hooks.slack.com/services/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",
-			b)
-		//strings.NewReader(b))
-		//bytes.NewBuffer(byteJson))
+			strings.NewReader(stringJson))
 		if err != nil {
 			log.Println("Failed parsing", err)
 			return err
@@ -93,13 +84,6 @@ func alert(path string, service string) error {
 	case "email":
 	case "empty":
 	default:
-		log.Println("default")
-		// send nothing
-		//query := url.Values{"text": "hogehoghoegegeg."}
-		//http.Post("https://hooks.slack.com/services/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",
-		//	"application/json", strings.NewReader(query.Encode()))
-		http.Post("https://hooks.slack.com/services/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",
-			"application/json", strings.NewReader("text: hogehoge"))
 	}
 	return nil
 }

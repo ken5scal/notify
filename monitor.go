@@ -82,7 +82,6 @@ func alert(path string, service string) error {
 
 	case "chatwork":
 	case "email":
-	case "empty":
 	default:
 	}
 	return nil
